@@ -1,0 +1,33 @@
+server:
+  port: 9200
+  max-http-header-size: 10485760
+
+spring:
+  profiles:
+    active: local
+  datasource:
+    url: jdbc:mysql://localhost:3306/local_elastic?characterEncoding=utf8&serverTimezone=GMT%2B8
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    database: 0
+    host: localhost
+
+#mybatis-plus
+mybatis-plus:
+  mapper-locations:
+    - classpath:/mapper/*.xml
+
+logging:
+  config: classpath:logback-spring.xml
+
+# ElasticSearch
+genochain:
+  elasticsearch:
+    host: 127.0.0.1
+    port: 9210
+    scheme: http
+    userName: elastic
+    password: wangzb
+    index_suffix: local

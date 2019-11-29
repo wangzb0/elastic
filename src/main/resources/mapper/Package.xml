@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elastic.mapper.PackageMapper">
+
+   <!-- 通用查询映射结果 -->
+   <resultMap id="BaseResultMap" type="com.elastic.entity.Package">
+      <id column="id" property="id" />
+      <result column="code" property="code"/>
+      <result column="user_id" property="userId" />
+      <result column="server_id" property="serverId" />
+      <result column="demo_url" property="demoUrl" />
+      <result column="json_desc" property="jsonDesc" />
+      <result column="used_num" property="usedNum" />
+      <result column="coin_price" property="coinPrice" />
+      <result column="status" property="status" />
+      <result column="sort_no" property="sortNo" />
+      <result column="created" property="created" />
+      <result column="deleted" property="deleted" />
+      <result column="updated" property="updated" />
+   </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="columns">
+        id, code, user_id, server_id, demo_url, json_desc, used_num, coin_price, status, sort_no, created, deleted, updated
+    </sql>
+
+   <select id="getByNeedSyncData" resultMap="BaseResultMap">
+      select
+      <include refid="columns"/>
+      from t_package where
+      (updated is null and  UNIX_TIMESTAMP(created) >= #{cursorTimestamp}) or (UNIX_TIMESTAMP(updated) >= #{cursorTimestamp})
+   </select>
+</mapper>
